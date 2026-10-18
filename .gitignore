@@ -15,3 +15,5 @@ reports/
 .env.*
 !.env.example
 .DS_Store
+# arquivos de report gerados pelo mochawesome
+cypress/reports/
