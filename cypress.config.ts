@@ -7,7 +7,7 @@ export default defineConfig({
     specPattern: 'cypress/e2e/**/*.cy.{ts,tsx}',
     supportFile: 'cypress/support/e2e.ts',
   },
-  env: {
+  expose: {
     apiUrl: 'https://restful-booker.herokuapp.com',
   },
 });
