@@ -15,7 +15,7 @@ describe('API - Cenários negativos de reservas', () => {
     });
   });
 
-  describe('Operações sem autenticação', () => {
+  describe('Operações com autenticação ausente ou inválida', () => {
     let token = '';
     let bookingId: number | undefined;
     let bookingData: BookingPayload;
@@ -92,5 +92,34 @@ describe('API - Cenários negativos de reservas', () => {
           expect(response.status).to.eq(403);
         });
     });
+
+
+it('deve impedir a atualização de uma reserva com token inválido', () => {
+  expect(bookingId).to.be.a('number');
+
+  return bookingApi
+    .updateBooking(
+      bookingId as number,
+      {
+        ...bookingData,
+        firstname: 'Alteracao nao autorizada',
+      },
+      'token-invalido'
+    )
+    .then((response) => {
+      expect(response.status).to.eq(403);
+    });
+});
+
+it('deve impedir a exclusão de uma reserva com token inválido', () => {
+  expect(bookingId).to.be.a('number');
+
+  return bookingApi
+    .deleteBooking(bookingId as number, 'token-invalido')
+    .then((response) => {
+      expect(response.status).to.eq(403);
+    });
+});
+
   });
 });
