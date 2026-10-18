@@ -46,4 +46,27 @@ describe('Sauce Demo - Checkout', () => {
     checkoutPage.finishOrder();
     checkoutPage.assertOrderIsComplete();
   });
+
+
+  it('deve impedir o avanço quando os dados do comprador não forem preenchidos', () => {
+    const loginPage = new LoginPage();
+    const inventoryPage = new InventoryPage();
+    const cartPage = new CartPage();
+    const checkoutPage = new CheckoutPage();
+
+    loginPage.visit();
+    loginPage.login('standard_user', 'secret_sauce');
+
+    inventoryPage.addProductToCart('sauce-labs-backpack');
+    inventoryPage.openCart();
+
+    cartPage.checkout();
+
+    checkoutPage.continueToOverview();
+
+    cy.get('[data-test="error"]')
+      .should('be.visible')
+      .and('contain.text', 'First Name is required');
+  });
+
 });
