@@ -20,4 +20,12 @@ export class InventoryPage {
     openCart() {
     return cy.get('.shopping_cart_link').click();
 }
+
+openMenu() {
+  return cy.get('#react-burger-menu-btn').click();
+}
+
+logout() {
+  return cy.get('[data-test="logout-sidebar-link"]').click();
+}
 }
