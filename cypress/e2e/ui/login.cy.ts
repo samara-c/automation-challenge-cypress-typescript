@@ -17,4 +17,28 @@ describe('Sauce Demo - Login', () => {
       .should('be.visible')
       .and('have.text', 'Products');
   });
+
+
+
+  it('deve exibir erro ao informar credenciais inválidas', () => {
+    loginPage.login('usuario_invalido', 'senha_invalida');
+
+    loginPage
+      .getErrorMessage()
+      .should('be.visible')
+      .and(
+        'contain.text',
+        'Username and password do not match any user in this service'
+      );
+  });
+
+  it('deve impedir o login de um usuário bloqueado', () => {
+    loginPage.login('locked_out_user', 'secret_sauce');
+
+    loginPage
+      .getErrorMessage()
+      .should('be.visible')
+      .and('contain.text', 'Sorry, this user has been locked out');
+  });
+
 });
