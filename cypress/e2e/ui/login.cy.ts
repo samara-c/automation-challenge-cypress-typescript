@@ -32,6 +32,7 @@ describe('Sauce Demo - Login', () => {
       );
   });
 
+  // Fluxo extra com usuário != de standard_user
   it('deve impedir o login de um usuário bloqueado', () => {
     loginPage.login('locked_out_user', 'secret_sauce');
 
