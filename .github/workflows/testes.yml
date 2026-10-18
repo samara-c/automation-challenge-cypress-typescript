@@ -1,0 +1,47 @@
+
+name: Testes automatizados
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  testes:
+    name: Executar testes Cypress
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Baixar codigo do repositorio
+        uses: actions/checkout@v7
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Executar testes automatizados
+        run: npm test
+
+      - name: Salvar relatorio Mochawesome e screenshots
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: relatorio-mochawesome-${{ github.run_number }}
+          path: |
+            cypress/reports/
+            cypress/screenshots/
+          if-no-files-found: warn
+          retention-days: 14
