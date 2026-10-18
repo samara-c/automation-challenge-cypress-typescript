@@ -1,0 +1,17 @@
+
+node_modules/
+
+# Artefatos dos testes
+cypress/screenshots/
+cypress/videos/
+cypress/downloads/
+
+# Relatórios e resultados temporários
+coverage/
+reports/
+
+# arquivos locais e segredos
+.env
+.env.*
+!.env.example
+.DS_Store
